@@ -6,10 +6,11 @@ import { useHistory } from 'react-router-dom';
 interface Props { title: string, shortcut: number }
 function WorkspaceButton({ title, shortcut }: Props) {
   const history = useHistory()
-  useMousetrap(`g ${shortcut}`, () => history.push(`/workspace/${title.toLowerCase()}`));
+  const onClick = () => history.push(`/workspace/${title.toLowerCase()}`)
+  useMousetrap(`g ${shortcut}`, onClick);
 
   return (
-    <div data-tip data-for={`${shortcut}`} className="cursor-pointer mb-5">
+    <div data-tip data-for={`${shortcut}`} className="cursor-pointer mb-5" onClick={onClick}>
       <div className="bg-gray-500 h-10 w-10 flex items-center justify-center text-black text-2xl font-semibold rounded-lg mb-1 overflow-hidden hover:ring-4 ring-offset-4 ring-offset-current ring-gray-400">
         {title[0]}
       </div>
