@@ -7,7 +7,7 @@ function Home() {
     <div>
       <header className="App-header">
         <div className="font-sans antialiased h-screen flex">
-          <div className="bg-gray-900 text-purple-lighter flex-none w-22 p-6 hidden md:block">
+          <div className="bg-gray-900 flex-none w-20 p-5 block">
             <WorkspaceButton title="Kubernetes" shortcut={1} />
             <WorkspaceButton title="Generic" shortcut={2} />
             <NewWorkspaceButton />
