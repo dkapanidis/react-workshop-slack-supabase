@@ -1,10 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import WorkspaceButton from './WorkspaceButton';
 import {
-  BrowserRouter as Router, Route, Switch
+  BrowserRouter as Router, Switch
 } from "react-router-dom";
+import './App.css';
 import Home from './pages/Home';
 
 function App() {
