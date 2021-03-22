@@ -1,19 +1,12 @@
 import React from 'react'
-import NewWorkspaceButton from '../components/NewWorkspaceButton'
-import WorkspaceButton from '../components/WorkspaceButton'
+import WorkspaceMenu from '../components/workspaceMenu'
 
 function Home() {
   return (
     <div>
       <header className="App-header">
         <div className="font-sans antialiased h-screen flex">
-          <div className="bg-gray-900 flex-none w-20 p-5 block">
-            <WorkspaceButton title="Kubernetes" shortcut={1} />
-            <WorkspaceButton title="Generic" shortcut={2} />
-            <NewWorkspaceButton />
-
-
-          </div>
+          <WorkspaceMenu />
           <div className="bg-indigo-darker text-purple-lighter flex-none w-64 pb-6 hidden md:block">
             <div className="text-white mb-2 mt-3 px-4 flex justify-between">
               <div className="flex-auto">

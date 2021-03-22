@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import useMousetrap from '../hooks/mousetrap';
+import useMousetrap from '../../hooks/mousetrap';
 import { NavLink, useHistory } from 'react-router-dom';
 
 interface Props { title: string, shortcut: number }
