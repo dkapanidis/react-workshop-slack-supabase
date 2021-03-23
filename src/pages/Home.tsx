@@ -5,10 +5,10 @@ import WorkspaceMenu from '../components/WorkspaceMenu'
 
 function Home() {
   return (
-    <header className="App-header bg-green-400 h-full flex flex-col">
+    <header className="App-header bg-gray-700 h-full flex flex-col space-y-0.5">
       <TopMenu />
       <div className="font-sans antialiased flex-1 flex space-x-0.5">
-        {/* <WorkspaceMenu /> */}
+        <WorkspaceMenu />
         <SideMenu title={"Generic"} />
       </div>
     </header>
