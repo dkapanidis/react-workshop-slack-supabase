@@ -1,11 +1,12 @@
 import React from 'react'
+import { useHistory } from 'react-router';
 import { auth, provider } from '../firebase';
 import { actionTypes } from '../reducer';
 import { useStateValue } from '../StateProvider';
 
 function Login() {
   const [, dispatch] = useStateValue() as any;
-
+const history = useHistory() 
   const signIn = (e: any) => {
     auth.signInWithPopup(provider)
       .then(result => {
@@ -14,6 +15,7 @@ function Login() {
           user: result.user,
         })
         console.log(result);
+        history.push("/workspace/general")
       }).catch(error => {
         alert(error.message)
       })

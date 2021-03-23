@@ -9,7 +9,7 @@ import { useStateValue } from './StateProvider';
 
 function App() {
   const [{ user }] = useStateValue() as any
-
+  console.log(user)
   return (
     <Router>
       {!user ? (
