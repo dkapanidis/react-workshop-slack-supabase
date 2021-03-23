@@ -35,7 +35,7 @@ function ChannelTop() {
 function ChannelMessages() {
   const messages = ["hi", 'there']
   return (
-    <div className="flex flex-col flex-grow bg-gray-800">
+    <div className="flex flex-col flex-grow px-8 py-4 bg-gray-800">
       {messages.map((msg) => (
         <div className="flex">{msg}</div>
       ))}
