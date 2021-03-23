@@ -1,5 +1,7 @@
 import { Add, AlternateEmail, ArrowDropDown, Bookmark, Create, ExpandMore, Forum, Inbox, InsertComment, Message, MoreVert, SettingsEthernet } from '@material-ui/icons'
 import React from 'react'
+import { NavLink, useParams } from 'react-router-dom'
+import QueryParams from '../models/queryParams'
 
 interface Props { title: string }
 function SideMenu({ title }: Props) {
@@ -29,7 +31,7 @@ function SideMenuOptions() {
   return (
     <div className="bg-gray-900 text-sm opacity-75 flex-grow overflow-auto">
       <SideMenuActions />
-      < SideMenuChannels />
+      <SideMenuChannels />
       <SideMenuDMs />
       <SideMenuApps />
     </div>
@@ -39,36 +41,42 @@ function SideMenuOptions() {
 function SideMenuActions() {
   return (
     <div className="py-2">
-      <SideMenuAction icon={<InsertComment/>}  title="Threads" />
-      <SideMenuAction icon={<Forum/>} title="All DMs" />
-      <SideMenuAction icon={<AlternateEmail/>} title="Mentions &amp; reactions" />
-      <SideMenuAction icon={<Bookmark/>} title="Saved items" />
-      <SideMenuAction icon={<SettingsEthernet/>} title="Slack Connect" />
-      <SideMenuAction icon={<MoreVert/>} title="More" />
-    </div>
-  )
-}
-interface SideMenuActionProps { icon: any, title: string }
-function SideMenuAction({icon, title }: SideMenuActionProps) {
-  return (
-    <div className="py-0.5 px-2 space-x-4">
-      <span>{icon}</span>
-      <span>{title}</span>
+      <SideMenuAction icon={<InsertComment />} text="Threads" to="threads" />
+      <SideMenuAction icon={<Forum />} text="All DMs" to="dms" />
+      <SideMenuAction icon={<AlternateEmail />} text="Mentions &amp; reactions" to="mentions" />
+      <SideMenuAction icon={<Bookmark />} text="Saved items" to="saved" />
+      <SideMenuAction icon={<SettingsEthernet />} text="Slack Connect" to="connect" />
+      <SideMenuAction icon={<MoreVert />} text="More" to="more" />
     </div>
   )
 }
 
+interface SideMenuActionProps { icon: any, text: string, to: string }
+function SideMenuAction({ icon, text, to }: SideMenuActionProps) {
+  const { title } = useParams<QueryParams>()
+  return (
+    <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center py-0.5 px-2 space-x-4 hover:bg-gray-800" to={`/workspace/${title}/${to}`}>
+      <span>{icon}</span>
+      <span>{text}</span>
+    </NavLink>
+  )
+}
+
 function SideMenuChannels() {
+  const { title } = useParams<QueryParams>()
+  var channels = ["general", "foo"]
   return (
     <div className="py-2">
       <div className="px-2 mb-2 flex items-center space-x-1">
         <ArrowDropDown />
         <div>Channels</div>
       </div>
-      <div className="pl-6 py-1 px-4 space-x-4">
-        <span>#</span>
-        <span>general</span>
-      </div>
+      {channels.map((channel) => (
+        <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-4 hover:bg-gray-800" to={`/workspace/${title}/channel/${channel}`}>
+          <span>#</span>
+          <span>{channel}</span>
+        </NavLink>
+      ))}
       <div className="pl-4 py-1 px-4 space-x-2">
         <Add className="bg-gray-800 py-1 rounded-md" />
         <span>Add channels</span>

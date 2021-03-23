@@ -10,7 +10,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/workspace/:title"><Home /></Route>
+        <Route path="/workspace/:title"><Home /></Route>
         <Route path="/"><Login /></Route>
       </Switch>
     </Router>

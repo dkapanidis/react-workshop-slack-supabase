@@ -1,5 +1,6 @@
 type QueryParams = {
-  title: string
+  title: string,
+  channel: string,
 }
 
 export default QueryParams

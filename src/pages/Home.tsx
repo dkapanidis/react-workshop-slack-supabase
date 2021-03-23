@@ -1,9 +1,12 @@
+
 import React from 'react'
-import { useParams } from 'react-router'
+import { Route, Switch, useParams } from 'react-router'
 import SideMenu from '../components/SideMenu'
 import TopMenu from '../components/TopMenu'
 import WorkspaceMenu from '../components/WorkspaceMenu'
 import QueryParams from '../models/queryParams'
+import Channel from './home/Channel'
+import NotFound from './home/NotFound'
 
 function Home() {
   let { title } = useParams<QueryParams>()
@@ -13,6 +16,10 @@ function Home() {
       <div className="flex flex-1 space-x-0.5">
         <WorkspaceMenu />
         <SideMenu title={title} />
+        <Switch>
+          <Route path="/workspace/:title/channel/:channel"><Channel /></Route>
+          <Route path="/workspace/:title/"><NotFound /></Route>
+        </Switch>
       </div>
     </header>
   )
