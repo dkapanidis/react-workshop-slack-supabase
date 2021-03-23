@@ -6,8 +6,10 @@ import QueryParams from '../../models/queryParams'
 function Channel() {
   return (
     <div className="flex flex-col flex-grow">
-      <ChannelTop />
-      <ChannelMessages />
+      <div className="space-y-0.5 bg-gray-700 flex flex-col flex-grow">
+        <ChannelTop />
+        <ChannelMessages />
+      </div>
       <ChannelInput />
     </div>
   )
@@ -16,7 +18,7 @@ function Channel() {
 function ChannelTop() {
   let { channel } = useParams<QueryParams>()
   return (
-    <div className="flex px-4 bg-gray-900 h-16 items-center">
+    <div className="flex px-4 bg-gray-800 h-16 items-center">
       <div>
         <div className="space-x-2">
           <span className="font-bold text-sm">#{channel}</span>
@@ -33,10 +35,14 @@ function ChannelTop() {
 function ChannelMessages() {
   const messages = ["hi", 'there']
   return (
-    <div className="flex-grow">
+    <div className="flex flex-col flex-grow bg-gray-800">
       {messages.map((msg) => (
-        <div>{msg}</div>
+        <div className="flex">{msg}</div>
       ))}
+      {messages.map((msg) => (
+        <div className="flex">{msg}</div>
+      ))}
+      <div className="flex flex-auto">ghi</div>
     </div>
   )
 }
