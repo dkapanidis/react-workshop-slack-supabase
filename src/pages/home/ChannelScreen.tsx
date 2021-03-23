@@ -80,7 +80,8 @@ function ChannelMessagesScreen() {
 
 interface ChannelMessageProps { message: ChannelMessages }
 function ChannelMessage({ message }: ChannelMessageProps) {
-  const date = new Date(message.timestamp?.toDate())
+  // retrieve from message timestamp or calculate from local time (for messages that are still on-the-fly)
+  const date = new Date(message.timestamp ? message.timestamp.toDate() : Date.now())
   return (
     <div>
       <span className="text-gray-400 text-xs pr-3 font-mono">{date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false })}</span>
