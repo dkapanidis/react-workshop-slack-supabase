@@ -29,7 +29,7 @@ function SideMenuTitle({ title }: SideMenuTitleProps) {
 
 function SideMenuOptions() {
   return (
-    <div className="bg-gray-900 text-sm opacity-75 flex-grow overflow-auto">
+    <div className="bg-gray-900 text-sm opacity-75 flex-grow overflow-auto space-y-4">
       <SideMenuActions />
       <SideMenuChannels />
       <SideMenuDMs />
@@ -65,30 +65,19 @@ function SideMenuAction({ icon, text, to }: SideMenuActionProps) {
 function SideMenuChannels() {
   const { title } = useParams<QueryParams>()
   var channels = ["general", "foo"]
-  const [open, setOpen] = useState(false)
-  const toggleHide = () => setOpen(!open)
   return (
-    <>
-      <div className="px-2 mb-2 flex items-center space-x-1 cursor-pointer select-none" onClick={toggleHide}>
-        {open && <ArrowDropDown className="hover:bg-gray-800 rounded-md" />}
-        {!open && <ArrowRight className="hover:bg-gray-800 rounded-md" />}
-        <div>Channels</div>
+    <ToggleMenu text="Channels">
+      {channels.map((channel) => (
+        <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-4 hover:bg-gray-800" to={`/workspace/${title}/channel/${channel}`}>
+          <span>#</span>
+          <span>{channel}</span>
+        </NavLink>
+      ))}
+      <div className="pl-4 py-1 px-4 space-x-2">
+        <Add className="bg-gray-800 py-1 rounded-md" />
+        <span>Add channels</span>
       </div>
-      {open &&
-        <>
-          {channels.map((channel) => (
-            <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-4 hover:bg-gray-800" to={`/workspace/${title}/channel/${channel}`}>
-              <span>#</span>
-              <span>{channel}</span>
-            </NavLink>
-          ))}
-          <div className="pl-4 py-1 px-4 space-x-2">
-            <Add className="bg-gray-800 py-1 rounded-md" />
-            <span>Add channels</span>
-          </div>
-        </>
-      }
-    </>
+    </ToggleMenu>
   )
 }
 
@@ -97,11 +86,7 @@ function SideMenuDMs() {
   var dms = ["Dimitris", "Joan", "Jorge"]
 
   return (
-    <div className="py-2">
-      <div className="px-2 mb-2 flex items-center space-x-1">
-        <ArrowDropDown />
-        <div>Direct messages</div>
-      </div>
+    <ToggleMenu text="Direct messages">
       {dms.map((dm) => (
         <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${title}/message/${dm}`}>
           <span></span>
@@ -113,7 +98,7 @@ function SideMenuDMs() {
         <Add className="bg-gray-800 py-1 rounded-md" />
         <span>Add teammates</span>
       </div>
-    </div>
+    </ToggleMenu>
   )
 }
 
@@ -122,11 +107,7 @@ function SideMenuApps() {
   var apps = ["GitHub", "Google Calendar"]
 
   return (
-    <div className="py-2">
-      <div className="px-2 mb-2 flex items-center space-x-1">
-        <ArrowDropDown />
-        <div>Apps</div>
-      </div>
+    <ToggleMenu text="Apps">
       {apps.map((app) => (
         <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${title}/app/${app}`}>
           <span></span>
@@ -137,6 +118,26 @@ function SideMenuApps() {
         <Add className="bg-gray-800 py-1 rounded-md" />
         <span>Add apps</span>
       </div>
+    </ToggleMenu>
+  )
+}
+
+interface ToggleMenuProps { text: string, children: any }
+function ToggleMenu({ text, children }: ToggleMenuProps) {
+  const [open, setOpen] = useState(true)
+  const toggleHide = () => setOpen(!open)
+  return (
+    <div>
+      <div className="px-2 mb-1 flex items-center space-x-1 cursor-pointer select-none" onClick={toggleHide}>
+        {open && <ArrowDropDown className="hover:bg-gray-800 rounded-md" />}
+        {!open && <ArrowRight className="hover:bg-gray-800 rounded-md" />}
+        <div>{text}</div>
+      </div>
+      {open &&
+        <>
+          {children}
+        </>
+      }
     </div>
   )
 }
