@@ -5,7 +5,7 @@ import SideMenu from '../components/SideMenu'
 import TopMenu from '../components/TopMenu'
 import WorkspaceMenu from '../components/WorkspaceMenu'
 import QueryParams from '../models/queryParams'
-import Channel from './home/Channel'
+import ChannelScreen from './home/ChannelScreen'
 import NotFound from './home/NotFound'
 
 function Home() {
@@ -19,7 +19,7 @@ function Home() {
           <SideMenu title={title} />
         </div>
         <Switch>
-          <Route path="/workspace/:title/channel/:channel"><Channel /></Route>
+          <Route path="/workspace/:title/channel/:channelID"><ChannelScreen /></Route>
           <Route path="/workspace/:title/"><NotFound /></Route>
         </Switch>
       </div>
