@@ -4,7 +4,7 @@ import React from 'react'
 interface Props { title: string }
 function SideMenu({ title }: Props) {
   return (
-    <div className="bg-gray-800 text-gray-200 text-base flex flex-col w-64 h-full space-y-0.5 overflow-hidden">
+    <div className="flex flex-col w-64 h-full space-y-0.5 overflow-hidden">
       <SideMenuTitle title={title} />
       <SideMenuOptions />
     </div>)
