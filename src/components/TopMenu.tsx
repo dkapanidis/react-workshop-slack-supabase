@@ -25,7 +25,7 @@ function TopMenuSearch({ title }: TopMenuSearchProps) {
   return (
     <div className=" px-4 w-60 bg-gray-700 rounded-md flex space-x-2 border border-gray-600">
       <Search />
-      <input className="w-full bg-transparent text-sm" placeholder={`Search ${title}`}></input>
+      <input className="w-full bg-transparent text-sm outline-none" placeholder={`Search ${title}`}></input>
     </div>
   );
 }
