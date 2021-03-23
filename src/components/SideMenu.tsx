@@ -86,16 +86,22 @@ function SideMenuChannels() {
 }
 
 function SideMenuDMs() {
+  const { title } = useParams<QueryParams>()
+  var dms = ["Dimitris", "Joan", "Jorge"]
+
   return (
     <div className="py-2">
       <div className="px-2 mb-2 flex items-center space-x-1">
         <ArrowDropDown />
         <div>Direct messages</div>
       </div>
-      <div className="pl-6 py-1 px-4 space-x-6">
-        <span></span>
-        <span className="text-white">Dimitris <span className="text-grey text-sm opacity-50">you</span></span>
-      </div>
+      {dms.map((dm) => (
+        <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${title}/message/${dm}`}>
+          <span></span>
+          {/* <span className="text-white">{dm} <span className="text-grey text-sm opacity-50">you</span></span> */}
+          <span className="text-white">{dm}</span>
+        </NavLink>
+      ))}
       <div className="pl-4 py-1 px-4 space-x-2">
         <Add className="bg-gray-800 py-1 rounded-md" />
         <span>Add teammates</span>
@@ -105,20 +111,21 @@ function SideMenuDMs() {
 }
 
 function SideMenuApps() {
+  const { title } = useParams<QueryParams>()
+  var apps = ["GitHub", "Google Calendar"]
+
   return (
     <div className="py-2">
       <div className="px-2 mb-2 flex items-center space-x-1">
         <ArrowDropDown />
         <div>Apps</div>
       </div>
-      <div className="pl-6 py-1 px-4 space-x-6">
-        <span></span>
-        <span className="text-white">GitHub</span>
-      </div>
-      <div className="pl-6 py-1 px-4 space-x-6">
-        <span></span>
-        <span className="text-white">Google Calendar</span>
-      </div>
+      {apps.map((app) => (
+        <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${title}/app/${app}`}>
+          <span></span>
+          <span className="text-white">{app}</span>
+        </NavLink>
+      ))}
       <div className="pl-4 py-1 px-4 space-x-2">
         <Add className="bg-gray-800 py-1 rounded-md" />
         <span>Add apps</span>
