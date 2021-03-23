@@ -1,6 +1,7 @@
 import { Add, AlternateEmail, ArrowDropDown, ArrowRight, Bookmark, Create, ExpandMore, Forum, InsertComment, MoreVert, SettingsEthernet } from '@material-ui/icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
+import db from '../firebase'
 import QueryParams from '../models/queryParams'
 
 interface Props { title: string }
@@ -64,13 +65,24 @@ function SideMenuAction({ icon, text, to }: SideMenuActionProps) {
 
 function SideMenuChannels() {
   const { title } = useParams<QueryParams>()
-  var channels = ["general", "foo"]
+  const [channels, setChannels] = useState<any>([]);
+
+  useEffect(() => {
+    db.collection('rooms').onSnapshot(snapshot => (
+      setChannels(snapshot.docs.map((doc) => ({
+        id: doc.id,
+        name: doc.data().name,
+      })))
+    )
+    )
+  }, [])
+
   return (
     <ToggleMenu text="Channels">
-      {channels.map((channel) => (
-        <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-4 hover:bg-gray-800" to={`/workspace/${title}/channel/${channel}`}>
+      {channels.map((channel: any) => (
+        <NavLink key={channel.id} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-4 hover:bg-gray-800" to={`/workspace/${title}/channel/${channel.id}`}>
           <span>#</span>
-          <span>{channel}</span>
+          <span>{channel.name}</span>
         </NavLink>
       ))}
       <div className="pl-4 py-1 px-4 space-x-2">
@@ -88,7 +100,7 @@ function SideMenuDMs() {
   return (
     <ToggleMenu text="Direct messages">
       {dms.map((dm) => (
-        <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${title}/message/${dm}`}>
+        <NavLink key={dm} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${title}/message/${dm}`}>
           <span></span>
           {/* <span className="text-white">{dm} <span className="text-grey text-sm opacity-50">you</span></span> */}
           <span className="text-white">{dm}</span>
@@ -109,7 +121,7 @@ function SideMenuApps() {
   return (
     <ToggleMenu text="Apps">
       {apps.map((app) => (
-        <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${title}/app/${app}`}>
+        <NavLink key={app} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${title}/app/${app}`}>
           <span></span>
           <span className="text-white">{app}</span>
         </NavLink>

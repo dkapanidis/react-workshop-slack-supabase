@@ -37,12 +37,8 @@ function ChannelMessages() {
   return (
     <div className="flex flex-col flex-grow px-8 py-4 bg-gray-800">
       {messages.map((msg) => (
-        <div className="flex">{msg}</div>
+        <div key={msg}>{msg}</div>
       ))}
-      {messages.map((msg) => (
-        <div className="flex">{msg}</div>
-      ))}
-      <div className="flex flex-auto">ghi</div>
     </div>
   )
 }
