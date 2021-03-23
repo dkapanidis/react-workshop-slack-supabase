@@ -13,6 +13,8 @@ interface Channel {
 interface ChannelMessages {
   message: string,
   timestamp: any,
+  user: string,
+  userImage: string,
 }
 
 function ChannelScreen() {
@@ -70,8 +72,20 @@ function ChannelMessagesScreen() {
   return (
     <div className="flex flex-col flex-grow px-8 py-4 bg-gray-800">
       {channelMessages.map((msg: any) => (
-        <div key={msg?.timestamp}>{msg?.message}</div>
+        <ChannelMessage key={msg?.timestamp} message={msg} />
       ))}
+    </div>
+  )
+}
+
+interface ChannelMessageProps { message: ChannelMessages }
+function ChannelMessage({ message }: ChannelMessageProps) {
+  const date = new Date(message.timestamp?.toDate())
+  return (
+    <div>
+      <span className="text-gray-400 text-xs pr-3 font-mono">{date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false })}</span>
+      <span className="text-green-500 text-sm pr-2">{message.user}</span>
+      <span className="text-gray-200 text-sm">{message.message}</span>
     </div>
   )
 }
