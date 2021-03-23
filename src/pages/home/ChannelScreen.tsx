@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import db from '../../firebase'
 import QueryParams from '../../models/queryParams'
+import { useStateValue } from '../../StateProvider'
+import firebase from 'firebase'
 
 interface Channel {
   name: string,
@@ -12,7 +14,6 @@ interface ChannelMessages {
   message: string,
   timestamp: any,
 }
-
 
 function ChannelScreen() {
   const { channelID } = useParams<QueryParams>();
@@ -30,7 +31,7 @@ function ChannelScreen() {
         <ChannelTop channel={channel} />
         <ChannelMessagesScreen />
       </div>
-      <ChannelInput channel={channel} />
+      <ChannelInput channel={channel} channelID={channelID} />
     </div>
   )
 }
@@ -69,21 +70,40 @@ function ChannelMessagesScreen() {
   return (
     <div className="flex flex-col flex-grow px-8 py-4 bg-gray-800">
       {channelMessages.map((msg: any) => (
-        <div key={msg?.message}>{msg?.message}</div>
+        <div key={msg?.timestamp}>{msg?.message}</div>
       ))}
     </div>
   )
 }
 
-interface ChannelInputProps { channel: Channel | undefined }
-function ChannelInput({ channel }: ChannelInputProps) {
+interface ChannelInputProps { channel: Channel | undefined, channelID?: string }
+function ChannelInput({ channel, channelID }: ChannelInputProps) {
+  const [input, setInput] = useState("");
+  const [{ user }] = useStateValue() as any;
+
+  const sendMessage = (e: any) => {
+    console.log('sending msg', channelID)
+    e.preventDefault();
+    if (channelID) {
+      db.collection('rooms').doc(channelID)
+        .collection('messages').add({
+          message: input,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          user: user.displayName,
+          userImage: user.photoURL,
+        })
+      setInput("")
+    }
+  }
+
   return (
-    <div className="px-5 pb-5">
+    <form className="px-5 pb-5">
       <div className="px-2 p-2 rounded-md border-gray-500 border flex space-x-4 text-gray-400">
         <FlashOn className="pr-2 border-r border-gray-500" />
-        <input className="text-white placeholder-gray-500 bg-transparent outline-none flex-auto" placeholder={`Message #${channel?.name}`}></input>
+        <input value={input} onChange={(e) => setInput(e.target.value)} className="text-white placeholder-gray-500 bg-transparent outline-none flex-auto" placeholder={`Message #${channel?.name}`}></input>
+        <button type="submit" onClick={sendMessage} />
       </div>
-    </div>
+    </form>
   )
 }
 
