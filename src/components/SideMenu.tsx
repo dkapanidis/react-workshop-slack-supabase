@@ -1,5 +1,5 @@
-import { Add, AlternateEmail, ArrowDropDown, Bookmark, Create, ExpandMore, Forum, Inbox, InsertComment, Message, MoreVert, SettingsEthernet } from '@material-ui/icons'
-import React from 'react'
+import { Add, AlternateEmail, ArrowDropDown, ArrowRight, Bookmark, Create, ExpandMore, Forum, InsertComment, MoreVert, SettingsEthernet } from '@material-ui/icons'
+import React, { useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import QueryParams from '../models/queryParams'
 
@@ -65,23 +65,30 @@ function SideMenuAction({ icon, text, to }: SideMenuActionProps) {
 function SideMenuChannels() {
   const { title } = useParams<QueryParams>()
   var channels = ["general", "foo"]
+  const [open, setOpen] = useState(false)
+  const toggleHide = () => setOpen(!open)
   return (
-    <div className="py-2">
-      <div className="px-2 mb-2 flex items-center space-x-1">
-        <ArrowDropDown />
+    <>
+      <div className="px-2 mb-2 flex items-center space-x-1 cursor-pointer select-none" onClick={toggleHide}>
+        {open && <ArrowDropDown className="hover:bg-gray-800 rounded-md" />}
+        {!open && <ArrowRight className="hover:bg-gray-800 rounded-md" />}
         <div>Channels</div>
       </div>
-      {channels.map((channel) => (
-        <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-4 hover:bg-gray-800" to={`/workspace/${title}/channel/${channel}`}>
-          <span>#</span>
-          <span>{channel}</span>
-        </NavLink>
-      ))}
-      <div className="pl-4 py-1 px-4 space-x-2">
-        <Add className="bg-gray-800 py-1 rounded-md" />
-        <span>Add channels</span>
-      </div>
-    </div>
+      {open &&
+        <>
+          {channels.map((channel) => (
+            <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-4 hover:bg-gray-800" to={`/workspace/${title}/channel/${channel}`}>
+              <span>#</span>
+              <span>{channel}</span>
+            </NavLink>
+          ))}
+          <div className="pl-4 py-1 px-4 space-x-2">
+            <Add className="bg-gray-800 py-1 rounded-md" />
+            <span>Add channels</span>
+          </div>
+        </>
+      }
+    </>
   )
 }
 
