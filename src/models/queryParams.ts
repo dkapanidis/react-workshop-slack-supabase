@@ -1,5 +1,5 @@
 type QueryParams = {
-  title: string,
+  workspaceID: string,
   channelID: string,
 }
 

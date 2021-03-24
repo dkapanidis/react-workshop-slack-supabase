@@ -16,7 +16,7 @@ function App() {
         <Login />
       ) : (
         <Switch>
-          <Route path="/workspace/:title"><Home /></Route>
+          <Route path="/workspace/:workspaceID"><Home /></Route>
           <Route path="/"><Login /></Route>
         </Switch>
       )}

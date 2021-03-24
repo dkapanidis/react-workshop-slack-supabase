@@ -22,7 +22,7 @@ function ChannelScreen() {
   const [channel, setChannel] = useState<Channel | undefined>()
   useEffect(() => {
     if (channelID) {
-      db.collection("rooms").doc(channelID).onSnapshot(snapshot =>
+      db.collection('channels').doc(channelID).onSnapshot(snapshot =>
         setChannel(snapshot.data() as Channel)
       )
     }
@@ -60,7 +60,7 @@ function ChannelMessagesScreen() {
   const [channelMessages, setChannelMessages] = useState<ChannelMessages[] | []>([])
   useEffect(() => {
     if (channelID) {
-      db.collection("rooms")
+      db.collection('channels')
         .doc(channelID)
         .collection("messages")
         .orderBy("timestamp", "asc")
@@ -113,7 +113,7 @@ function ChannelInput({ channel, channelID }: ChannelInputProps) {
     console.log('sending msg', channelID)
     e.preventDefault();
     if (channelID) {
-      db.collection('rooms').doc(channelID)
+      db.collection('channels').doc(channelID)
         .collection('messages').add({
           message: input,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
