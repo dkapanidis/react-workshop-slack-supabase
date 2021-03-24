@@ -9,37 +9,6 @@ function WorkspaceMenu() {
     <div className="bg-gray-900 flex-none w-18 p-5 block overflow-scroll">
       <WorkspaceButton title="Kubernetes" shortcut={1} />
       <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
-      <WorkspaceButton title="Generic" shortcut={2} />
       <WorkspaceNewButton />
     </div>
   )
