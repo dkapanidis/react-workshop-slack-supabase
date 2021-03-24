@@ -29,7 +29,7 @@ function ChannelScreen() {
   }, [channelID])
   return (
     <div className="flex flex-col flex-grow">
-      <div className="space-y-0.5 bg-gray-700 flex flex-col flex-grow">
+      <div className="space-y-0.5 bg-gray-700 flex flex-col flex-grow overflow-hidden">
         <ChannelTop channel={channel} />
         <ChannelMessagesScreen />
       </div>
@@ -70,7 +70,7 @@ function ChannelMessagesScreen() {
     }
   }, [channelID])
   return (
-    <div className="flex flex-col flex-grow px-8 py-4 bg-gray-800">
+    <div className="flex flex-col flex-grow px-8 py-4 bg-gray-800 overflow-auto">
       {channelMessages.map((msg: any) => (
         <ChannelMessage key={msg?.timestamp} message={msg} />
       ))}
