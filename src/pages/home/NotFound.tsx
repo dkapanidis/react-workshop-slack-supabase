@@ -2,9 +2,7 @@ import React from 'react'
 
 function NotFound() {
   return (
-    <div>
-      Under Construction
-    </div>
+    <span className="flex flex-grow items-center justify-center">Under Construction</span>
   )
 }
 
