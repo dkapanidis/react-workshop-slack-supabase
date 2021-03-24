@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import db from '../firebase'
 import QueryParams from '../models/queryParams'
+import { useStateValue } from '../StateProvider'
 
 interface Props { title: string }
 function SideMenu({ title }: Props) {
@@ -116,14 +117,28 @@ function SideMenuDMs() {
 
 function SideMenuApps() {
   const { title } = useParams<QueryParams>()
-  var apps = ["GitHub", "Google Calendar"]
+  const [{ user }] = useStateValue() as any;
+  // var apps = ["GitHub", "Google Calendar"]
+  // const { title } = useParams<QueryParams>()
+  const [apps, setApps] = useState<any>([]);
+  console.log(user.uid)
+  useEffect(() => {
+    db.collection('stories')
+      .where(`roles.${user.uid}`, "==", "owner").onSnapshot(snapshot => (
+        setApps(snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })))
+      )
+      )
+  }, [])
 
   return (
     <ToggleMenu text="Apps">
-      {apps.map((app) => (
+      {apps.map((app: any) => (
         <NavLink key={app} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${title}/app/${app}`}>
           <span></span>
-          <span className="text-white">{app}</span>
+          <span className="text-white">{app.title}</span>
         </NavLink>
       ))}
       <div className="pl-4 py-1 px-4 space-x-2">

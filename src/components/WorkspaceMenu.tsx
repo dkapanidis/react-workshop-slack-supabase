@@ -1,14 +1,30 @@
 import { Add } from '@material-ui/icons'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
+import db from '../firebase'
 import useMousetrap from '../hooks/mousetrap'
+import { useStateValue } from '../StateProvider'
 
 function WorkspaceMenu() {
+  const [{ user }] = useStateValue() as any;
+  const [workspaces, setWorkspaces] = useState<any>([]);
+  useEffect(() => {
+    db.collection('workspaces')
+      .where(`roles.${user.uid}`, "==", "owner").onSnapshot(snapshot => (
+        setWorkspaces(snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })))
+      )
+      )
+  }, [])
+
   return (
     <div className="bg-gray-900 flex-none w-18 p-5 block overflow-scroll">
-      <WorkspaceButton title="Kubernetes" shortcut={1} />
-      <WorkspaceButton title="Generic" shortcut={2} />
+      {workspaces.map((workspace: any, index: number) => (
+        <WorkspaceButton title={workspace.name} shortcut={index + 1} />
+      ))}
       <WorkspaceNewButton />
     </div>
   )
@@ -23,7 +39,7 @@ function WorkspaceButton({ title, shortcut }: WorkspaceButtonProps) {
   return (
     <div data-tip data-for={`${shortcut}`} className="cursor-pointer mb-5">
       <NavLink className="outline-none focus:ring-4 bg-gray-500 h-8 w-8 flex items-center justify-center text-black text-xl font-semibold rounded-lg mb-1 overflow-hidden hover:ring-4 ring-offset-4 ring-offset-gray-900 hover:ring-gray-700" activeClassName="ring-4 ring-gray-300" to={`/workspace/${title.toLowerCase()}`}>
-        {title[0]}
+        {title[0].toUpperCase()}
       </NavLink>
       <ReactTooltip offset={{ right: 2 }} id={`${shortcut}`} className="tooltip" place="right" effect="solid" delayShow={400} border={false} backgroundColor="transparent">
         <div className="bg-gray-800 p-1 border rounded-md border-gray-700 px-2 text-xl text-gray-300 font-light">

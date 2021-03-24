@@ -6,7 +6,7 @@ import { useStateValue } from '../StateProvider';
 interface TopMenuProps { title: string }
 function TopMenu({ title }: TopMenuProps) {
   const [{ user }] = useStateValue() as any;
-
+console.log(user.uid)
   return (
     <div className="px-5 py-2 bg-gray-900 text-gray-200">
       <div className="justify-center items-center flex space-x-4 text-gray-400">
