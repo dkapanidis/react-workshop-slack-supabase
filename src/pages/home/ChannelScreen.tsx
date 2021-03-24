@@ -80,15 +80,28 @@ function ChannelMessagesScreen() {
 
 interface ChannelMessageProps { message: ChannelMessages }
 function ChannelMessage({ message }: ChannelMessageProps) {
+  const color = getColor(message.user)
   // retrieve from message timestamp or calculate from local time (for messages that are still on-the-fly)
   const date = new Date(message.timestamp ? message.timestamp.toDate() : Date.now())
   return (
     <div>
       <span className="text-gray-400 text-xs pr-3 font-mono">{date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false })}</span>
-      <span className="text-green-500 text-sm pr-2">{message.user}</span>
+      <span className={`${color} text-sm pr-2`}>{message.user}</span>
       <span className="text-gray-200 text-sm">{message.message}</span>
     </div>
   )
+}
+
+function getColor(text: string) {
+  const colors = ["text-green-500", "text-blue-500", "text-pink-500", "text-indigo-500", "text-purple-500", "text-yellow-500", "text-red-500"]
+  var hash = 0;
+  if (text.length === 0) return hash;
+  for (var i = 0; i < text.length; i++) {
+    hash = text.charCodeAt(i) + ((hash << 5) - hash);
+    hash = hash & hash;
+  }
+  hash = ((hash % colors.length) + colors.length) % colors.length;
+  return colors[hash];
 }
 
 interface ChannelInputProps { channel: Channel | undefined, channelID?: string }
