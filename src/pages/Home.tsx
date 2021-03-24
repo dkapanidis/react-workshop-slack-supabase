@@ -9,7 +9,6 @@ import QueryParams from '../models/queryParams'
 import { useStateValue } from '../StateProvider'
 import ChannelScreen from './home/ChannelScreen'
 import NotFound from './home/NotFound'
-import NewWorkspace from './workspace/NewWorkspace'
 
 function Home() {
   let { workspaceID } = useParams<QueryParams>()
@@ -17,7 +16,7 @@ function Home() {
   const [workspace, setWorkspace] = useState<any>([]);
   useEffect(() => {
     db.collection('workspaces')
-      .where(`roles.${user.uid}`, "==", "owner").onSnapshot(snapshot => (
+      .onSnapshot(snapshot => (
         snapshot.docs.forEach((doc) => {
           if (doc.id === workspaceID) {
             setWorkspace({
@@ -40,7 +39,6 @@ function Home() {
         <Switch>
           <Route path="/workspace/:workspaceID/channel/:channelID"><ChannelScreen /></Route>
           <Route path="/workspace/:workspaceID/"><NotFound /></Route>
-          <Route path="/workspace/"><NewWorkspace /></Route>
         </Switch>
       </div>
     </header>

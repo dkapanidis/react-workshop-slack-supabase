@@ -130,7 +130,7 @@ function ChannelInput({ channel, channelID }: ChannelInputProps) {
     <form className="px-5 pb-5">
       <div className="px-2 p-2 rounded-md border-gray-500 border flex space-x-4 text-gray-400">
         <FlashOn className="pr-2 border-r border-gray-500" />
-        <input value={input} onChange={(e) => setInput(e.target.value)} className="text-white placeholder-gray-500 bg-transparent outline-none flex-auto" placeholder={`Message #${channel?.name}`}></input>
+        <input autoFocus value={input} onChange={(e) => setInput(e.target.value)} className="text-white placeholder-gray-500 bg-transparent outline-none flex-auto" placeholder={`Message #${channel?.name}`}></input>
         <button type="submit" onClick={sendMessage} />
       </div>
     </form>

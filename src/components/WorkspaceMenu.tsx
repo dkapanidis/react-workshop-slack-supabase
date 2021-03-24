@@ -10,14 +10,13 @@ function WorkspaceMenu() {
   const [{ user }] = useStateValue() as any;
   const [workspaces, setWorkspaces] = useState<any>([]);
   useEffect(() => {
-    db.collection('workspaces')
-      .where(`roles.${user.uid}`, "==", "owner").onSnapshot(snapshot => (
-        setWorkspaces(snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })))
-      )
-      )
+    db.collection('workspaces').onSnapshot(snapshot => (
+      setWorkspaces(snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })))
+    )
+    )
   }, [user.uid])
 
   return (
@@ -62,8 +61,15 @@ function WorkspaceNewButton() {
         roles: {
           [user.uid]: 'owner',
         }
-      }).then((res) => {
-        history.push(`/workspace/${res.id}`)
+      }).then((workspace) => {
+        db.collection('workspaces').doc(workspace.id).collection("channels").add({
+          name: "general",
+          roles: {
+            [user.uid]: 'owner',
+          }
+        }).then(res => {
+          history.push(`/workspace/${workspace.id}/channel/${res.id}`)
+        })
       })
     }
   }
