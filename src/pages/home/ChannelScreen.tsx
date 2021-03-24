@@ -18,15 +18,17 @@ interface ChannelMessages {
 }
 
 function ChannelScreen() {
-  const { channelID } = useParams<QueryParams>();
+  const { workspaceID, channelID } = useParams<QueryParams>();
   const [channel, setChannel] = useState<Channel | undefined>()
+
   useEffect(() => {
     if (channelID) {
-      db.collection('channels').doc(channelID).onSnapshot(snapshot =>
+      db.collection('workspaces').doc(workspaceID).collection('channels').doc(channelID).onSnapshot(snapshot =>
         setChannel(snapshot.data() as Channel)
       )
     }
-  }, [channelID])
+  }, [workspaceID, channelID])
+  
   return (
     <div className="flex flex-col flex-grow">
       <div className="space-y-0.5 bg-gray-700 flex flex-col flex-grow overflow-hidden">

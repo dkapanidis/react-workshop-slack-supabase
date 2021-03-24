@@ -69,20 +69,20 @@ function SideMenuChannels() {
   const [channels, setChannels] = useState<any>([]);
   const history = useHistory();
   useEffect(() => {
-    db.collection('channels').onSnapshot(snapshot => (
+    db.collection('workspaces').doc(workspaceID).collection('channels').onSnapshot(snapshot => (
       setChannels(snapshot.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
       })))
     )
     )
-  }, [])
+  }, [workspaceID])
 
   const [{ user }] = useStateValue() as any;
   const addChannel = () => {
     const channelName = prompt("Please enter the channel name")
     if (channelName) {
-      db.collection("channels").add({
+      db.collection('workspaces').doc(workspaceID).collection("channels").add({
         name: channelName,
         roles: {
           [user.uid]: 'owner',
