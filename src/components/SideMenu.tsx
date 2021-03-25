@@ -31,8 +31,6 @@ function SideMenuOptions() {
     <div className="bg-gray-900 text-sm flex-grow overflow-auto space-y-4">
       <SideMenuActions />
       <SideMenuChannels />
-      <SideMenuDMs />
-      <SideMenuApps />
     </div>
   )
 }
@@ -104,53 +102,6 @@ function SideMenuChannels() {
   )
 }
 
-function SideMenuDMs() {
-  var dms = ["Dimitris", "Joan", "Jorge"]
-
-  return (
-    <ToggleMenu text="Direct messages">
-      {dms.map((dm) => (
-        <NavLink key={dm} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/message/${dm}`}>
-          <span></span>
-          {/* <span className="text-white">{dm} <span className="text-grey text-sm opacity-50">you</span></span> */}
-          <span className="text-white">{dm}</span>
-        </NavLink>
-      ))}
-      <div className="pl-4 py-1 px-4 space-x-2">
-        <Add className="bg-gray-800 py-1 rounded-md" />
-        <span>Add teammates</span>
-      </div>
-    </ToggleMenu>
-  )
-}
-
-function SideMenuApps() {
-  const [apps, setApps] = useState<any>([]);
-  useEffect(() => {
-    db.collection('apps').onSnapshot(snapshot => (
-      setApps(snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })))
-    )
-    )
-  }, [])
-
-  return (
-    <ToggleMenu text="Apps">
-      {apps.map((app: any) => (
-        <NavLink key={app.name} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/app/${app.name}`}>
-          <span></span>
-          <span className="text-white">{app.name}</span>
-        </NavLink>
-      ))}
-      <div className="pl-4 py-1 px-4 space-x-2">
-        <Add className="bg-gray-800 py-1 rounded-md" />
-        <span>Add apps</span>
-      </div>
-    </ToggleMenu>
-  )
-}
 
 interface ToggleMenuProps { text: string, children: any }
 function ToggleMenu({ text, children }: ToggleMenuProps) {
