@@ -3,7 +3,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router'
 import SideMenu from '../components/SideMenu'
 import TopMenu from '../components/TopMenu'
-import ChannelScreen from './home/Chat'
+import Chat from './home/Chat'
 import NotFound from './home/NotFound'
 
 function Home() {
@@ -15,7 +15,7 @@ function Home() {
           <SideMenu />
         </div>
         <Switch>
-          <Route path="/channel/:channelID"><ChannelScreen /></Route>
+          <Route path="/channel/:channelID"><Chat /></Route>
           <Route path="/"><NotFound /></Route>
         </Switch>
       </div>
