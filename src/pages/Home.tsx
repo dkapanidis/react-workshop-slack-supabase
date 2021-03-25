@@ -3,7 +3,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router'
 import SideMenu from '../components/SideMenu'
 import TopMenu from '../components/TopMenu'
-import ChannelScreen from './home/ChannelScreen'
+import ChannelScreen from './home/Chat'
 import NotFound from './home/NotFound'
 
 function Home() {
