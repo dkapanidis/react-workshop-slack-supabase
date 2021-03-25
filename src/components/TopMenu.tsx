@@ -6,7 +6,7 @@ import { useStateValue } from '../StateProvider';
 function TopMenu() {
   const [{ user }] = useStateValue() as any;
   return (
-    <div className="px-5 py-2 bg-gray-900 text-gray-200">
+    <div className="bg-gray-900 h-10 px-5 py-2">
       <div className="justify-center items-center flex space-x-4 text-gray-400">
         <div className="flex flex-grow " />
         <ArrowBack />
