@@ -26,10 +26,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "build:tailwind": "tailwind build src/tailwind.css -o src/index.css",
-    "watch:tailwind": "chokidar 'tailwind.config.js' 'src/tailwind.css' --ignore src/index.css -c 'npm run build:tailwind'",
-    "start": "npm-run-all build:tailwind --parallel watch:tailwind dev",
-    "dev": "craco start",
+    "start": "craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
