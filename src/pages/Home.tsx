@@ -11,9 +11,7 @@ function Home() {
     <header className="font-sans antialiased bg-gray-800 text-gray-200 text-base h-screen flex flex-col space-y-0.5 overflow-hidden">
       <TopMenu />
       <div className="flex flex-auto overflow-hidden">
-        <div className="flex flex-row space-x-0.5">
-          <SideMenu />
-        </div>
+        <SideMenu />
         <Switch>
           <Route path="/channel/:channelID"><Chat /></Route>
           <Route path="/"><NotFound /></Route>
