@@ -15,8 +15,8 @@ function Home() {
           <SideMenu />
         </div>
         <Switch>
-          <Route path="/workspace/:workspaceID/channel/:channelID"><ChannelScreen /></Route>
-          <Route path="/workspace/:workspaceID/"><NotFound /></Route>
+          <Route path="/channel/:channelID"><ChannelScreen /></Route>
+          <Route path="/"><NotFound /></Route>
         </Switch>
       </div>
     </header>

@@ -18,17 +18,17 @@ interface ChannelMessages {
 }
 
 function ChannelScreen() {
-  const { workspaceID, channelID } = useParams<QueryParams>();
+  const { channelID } = useParams<QueryParams>();
   const [channel, setChannel] = useState<Channel | undefined>()
 
   useEffect(() => {
     if (channelID) {
-      db.collection('workspaces').doc(workspaceID).collection('channels').doc(channelID).onSnapshot(snapshot =>
+      db.collection('channels').doc(channelID).onSnapshot(snapshot =>
         setChannel(snapshot.data() as Channel)
       )
     }
-  }, [workspaceID, channelID])
-  
+  }, [channelID])
+
   return (
     <div className="flex flex-col flex-grow">
       <div className="space-y-0.5 bg-gray-700 flex flex-col flex-grow overflow-hidden">
@@ -130,7 +130,7 @@ function ChannelInput({ channel, channelID }: ChannelInputProps) {
     <form className="px-5 pb-5">
       <div className="px-2 p-2 rounded-md border-gray-500 border flex space-x-4 text-gray-400">
         <FlashOn className="pr-2 border-r border-gray-500" />
-        <input autoFocus value={input} onChange={(e) => setInput(e.target.value)} className="text-white placeholder-gray-500 bg-transparent outline-none flex-auto" placeholder={`Message #${channel?.name}`}></input>
+        <input autoFocus value={input} onChange={(e) => setInput(e.target.value)} className="text-white placeholder-gray-500 bg-transparent outline-none flex-auto" placeholder="Type your message..."></input>
         <button type="submit" onClick={sendMessage} />
       </div>
     </form>

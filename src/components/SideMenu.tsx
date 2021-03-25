@@ -1,8 +1,7 @@
 import { Add, AlternateEmail, ArrowDropDown, ArrowRight, Bookmark, Create, ExpandMore, Forum, InsertComment, MoreVert, SettingsEthernet } from '@material-ui/icons'
 import React, { useEffect, useState } from 'react'
-import { NavLink, useHistory, useParams } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import db from '../firebase'
-import QueryParams from '../models/queryParams'
 import { useStateValue } from '../StateProvider'
 
 function SideMenu() {
@@ -53,9 +52,8 @@ function SideMenuActions() {
 
 interface SideMenuActionProps { icon: any, text: string, to: string }
 function SideMenuAction({ icon, text, to }: SideMenuActionProps) {
-  const { workspaceID } = useParams<QueryParams>()
   return (
-    <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center py-0.5 px-2 space-x-4 hover:bg-gray-800" to={`/workspace/${workspaceID}/${to}`}>
+    <NavLink activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center py-0.5 px-2 space-x-4 hover:bg-gray-800" to={`/${to}`}>
       <span>{icon}</span>
       <span>{text}</span>
     </NavLink>
@@ -63,30 +61,29 @@ function SideMenuAction({ icon, text, to }: SideMenuActionProps) {
 }
 
 function SideMenuChannels() {
-  const { workspaceID } = useParams<QueryParams>()
   const [channels, setChannels] = useState<any>([]);
   const history = useHistory();
   useEffect(() => {
-    db.collection('workspaces').doc(workspaceID).collection('channels').onSnapshot(snapshot => (
+    db.collection('channels').onSnapshot(snapshot => (
       setChannels(snapshot.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
       })))
     )
     )
-  }, [workspaceID])
+  }, [])
 
   const [{ user }] = useStateValue() as any;
   const addChannel = () => {
     const channelName = prompt("Please enter the channel name")
     if (channelName) {
-      db.collection('workspaces').doc(workspaceID).collection("channels").add({
+      db.collection("channels").add({
         name: channelName,
         roles: {
           [user.uid]: 'owner',
         }
       }).then(res => {
-        history.push(`/workspace/${workspaceID}/channel/${res.id}`)
+        history.push(`/channel/${res.id}`)
       })
     }
   }
@@ -94,7 +91,7 @@ function SideMenuChannels() {
   return (
     <ToggleMenu text="Channels">
       {channels.map((channel: any) => (
-        <NavLink key={channel.id} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-4 hover:bg-gray-800" to={`/workspace/${workspaceID}/channel/${channel.id}`}>
+        <NavLink key={channel.id} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-4 hover:bg-gray-800" to={`/channel/${channel.id}`}>
           <span>#</span>
           <span>{channel.name}</span>
         </NavLink>
@@ -108,13 +105,12 @@ function SideMenuChannels() {
 }
 
 function SideMenuDMs() {
-  const { workspaceID } = useParams<QueryParams>()
   var dms = ["Dimitris", "Joan", "Jorge"]
 
   return (
     <ToggleMenu text="Direct messages">
       {dms.map((dm) => (
-        <NavLink key={dm} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${workspaceID}/message/${dm}`}>
+        <NavLink key={dm} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/message/${dm}`}>
           <span></span>
           {/* <span className="text-white">{dm} <span className="text-grey text-sm opacity-50">you</span></span> */}
           <span className="text-white">{dm}</span>
@@ -129,7 +125,6 @@ function SideMenuDMs() {
 }
 
 function SideMenuApps() {
-  const { workspaceID } = useParams<QueryParams>()
   const [apps, setApps] = useState<any>([]);
   useEffect(() => {
     db.collection('apps').onSnapshot(snapshot => (
@@ -144,7 +139,7 @@ function SideMenuApps() {
   return (
     <ToggleMenu text="Apps">
       {apps.map((app: any) => (
-        <NavLink key={app.name} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/workspace/${workspaceID}/app/${app.name}`}>
+        <NavLink key={app.name} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-6 hover:bg-gray-800" to={`/app/${app.name}`}>
           <span></span>
           <span className="text-white">{app.name}</span>
         </NavLink>

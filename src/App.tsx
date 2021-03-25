@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter as Router, Route, Switch
+  BrowserRouter as Router
 } from "react-router-dom";
 import './App.css';
 import Home from './pages/Home';
@@ -15,10 +15,7 @@ function App() {
       {!user ? (
         <Login />
       ) : (
-        <Switch>
-          <Route path="/workspace/:workspaceID"><Home /></Route>
-          <Route path="/"><Login /></Route>
-        </Switch>
+        <Home />
       )}
     </Router>
   );
