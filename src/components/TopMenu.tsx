@@ -20,7 +20,7 @@ function TopMenu() {
         <div className="flex flex-grow" />
         {user && <>
           <span>{user.displayName}</span>
-          <Avatar className="header__avatar"
+          <Avatar
             alt={user?.displayName}
             src={user?.photoURL}
             style={{ width: "25px", height: "25px" }}
