@@ -15,7 +15,7 @@ function Login() {
           user: result.user,
         })
         console.log(result);
-        history.push("/channel/Wtrl6oKgjLh6p1EtOAlV")
+        history.push("/channel/VzXyZUQYievZSkEA2Alm")
       }).catch(error => {
         alert(error.message)
       })
