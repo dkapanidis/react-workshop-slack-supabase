@@ -1,9 +1,9 @@
 import { FlashOn, InfoOutlined, StarOutline } from '@material-ui/icons'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import db from '../../firebase'
-import QueryParams from '../../models/queryParams'
-import { useStateValue } from '../../StateProvider'
+import db from '../firebase'
+import QueryParams from '../models/QueryParams'
+import { useStateValue } from '../StateProvider'
 import firebase from 'firebase'
 
 interface Channel {

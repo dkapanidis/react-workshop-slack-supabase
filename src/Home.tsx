@@ -1,10 +1,9 @@
 
 import React from 'react'
 import { Route, Switch } from 'react-router'
-import SideMenu from '../components/SideMenu'
-import TopMenu from '../components/TopMenu'
-import Chat from './home/Chat'
-import NotFound from './home/NotFound'
+import Chat from './components/Chat'
+import SideMenu from './components/SideMenu'
+import TopMenu from './components/TopMenu'
 
 function Home() {
   return (
@@ -14,7 +13,6 @@ function Home() {
         <SideMenu />
         <Switch>
           <Route path="/channel/:channelID"><Chat /></Route>
-          <Route path="/"><NotFound /></Route>
         </Switch>
       </div>
     </header>

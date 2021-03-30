@@ -1,8 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router';
-import { auth, provider } from '../firebase';
-import { actionTypes } from '../reducer';
-import { useStateValue } from '../StateProvider';
+import { auth, provider } from './firebase';
+import { actionTypes } from './reducer';
+import { useStateValue } from './StateProvider';
 
 function Login() {
   const [, dispatch] = useStateValue() as any;
@@ -14,7 +14,6 @@ function Login() {
           type: actionTypes.SET_USER,
           user: result.user,
         })
-        console.log(result);
         history.push("/channel/VzXyZUQYievZSkEA2Alm")
       }).catch(error => {
         alert(error.message)
