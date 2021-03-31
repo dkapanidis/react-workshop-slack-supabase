@@ -1,7 +1,3 @@
-# React NFT Slack
+# React Workshop - Slack Clone
 
-Slack clone based on react-nft.
-
-## UI
-
-UI is based on https://tailwindcomponents.com/component/slack-clone-1
+Slack clone using React, Tailwind and Firebase
