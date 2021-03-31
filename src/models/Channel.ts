@@ -1,5 +1,7 @@
 interface Channel {
-    name: string,
+  id: number,
+  inserted_at: string,
+  slug: string,
 }
 
 export default Channel

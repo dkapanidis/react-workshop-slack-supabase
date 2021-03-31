@@ -1,8 +1,7 @@
 import { Add, AlternateEmail, ArrowDropDown, ArrowRight, Bookmark, Create, ExpandMore, Forum, InsertComment, MoreVert, SettingsEthernet } from '@material-ui/icons'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
-import db from '../firebase'
-import { useStateValue } from '../StateProvider'
+import { addChannel, useStore } from '../lib/Store'
 
 function SideMenu() {
   return (
@@ -59,30 +58,17 @@ function SideMenuAction({ icon, text, to }: SideMenuActionProps) {
 }
 
 function SideMenuChannels() {
-  const [channels, setChannels] = useState<any>([]);
   const history = useHistory();
-  useEffect(() => {
-    db.collection('channels').onSnapshot(snapshot => (
-      setChannels(snapshot.docs.map((doc) => ({
-        id: doc.id,
-        name: doc.data().name,
-      })))
-    )
-    )
-  }, [])
-
-  const [{ user }] = useStateValue() as any;
-  const addChannel = () => {
-    const channelName = prompt("Please enter the channel name")
-    if (channelName) {
-      db.collection("channels").add({
-        name: channelName,
-        roles: {
-          [user.uid]: 'owner',
-        }
-      }).then(res => {
-        history.push(`/channel/${res.id}`)
-      })
+  const { channels } = useStore({})
+  const newChannel = () => {
+    const slug = prompt("Please enter the channel name")
+    if (slug) {
+      addChannel(slugify(slug))
+        .then((res: any) => {
+          if (res) {
+            history.push(`/channel/${res[0]?.id}`)
+          }
+        })
     }
   }
 
@@ -91,17 +77,16 @@ function SideMenuChannels() {
       {channels.map((channel: any) => (
         <NavLink key={channel.id} activeClassName="bg-blue-500 font-semibold text-white" className="flex items-center pl-6 py-1 px-4 space-x-4 hover:bg-gray-800" to={`/channel/${channel.id}`}>
           <span>#</span>
-          <span>{channel.name}</span>
+          <span>{channel.slug}</span>
         </NavLink>
       ))}
-      <div className="pl-4 py-1 px-4 space-x-2 cursor-pointer" onClick={addChannel}>
+      <div className="pl-4 py-1 px-4 space-x-2 cursor-pointer" onClick={newChannel}>
         <Add className="bg-gray-800 py-1 rounded-md" />
         <span>Add channels</span>
       </div>
     </ToggleMenu>
   )
 }
-
 
 interface ToggleMenuProps { text: string, children: any }
 function ToggleMenu({ text, children }: ToggleMenuProps) {
@@ -121,6 +106,17 @@ function ToggleMenu({ text, children }: ToggleMenuProps) {
       }
     </div>
   )
+}
+
+const slugify = (text: string) => {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w-]+/g, '') // Remove all non-word chars
+    .replace(/--+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, '') // Trim - from end of text
 }
 
 export default SideMenu

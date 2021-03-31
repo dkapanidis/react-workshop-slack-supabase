@@ -1,11 +1,12 @@
 {
-  "name": "react-workshop-slack",
+  "name": "react-workshop-slack-supabase",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.1.1",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@supabase/supabase-js": "^1.7.6",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -15,7 +16,6 @@
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.2",
     "@types/react-router-dom": "^5.1.7",
-    "firebase": "^8.3.1",
     "mousetrap": "^1.6.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

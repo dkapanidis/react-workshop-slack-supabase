@@ -1,10 +1,9 @@
-import { Avatar } from '@material-ui/core';
-import { ArrowBack, ArrowForward, HelpOutline, QueryBuilder, Search } from '@material-ui/icons';
-import React from 'react';
-import { useStateValue } from '../StateProvider';
+import { ArrowBack, ArrowForward, ExitToApp, HelpOutline, QueryBuilder, Search } from '@material-ui/icons';
+import React, { useContext } from 'react';
+import UserContext from '../lib/UserContext';
 
 function TopMenu() {
-  const [{ user }] = useStateValue() as any;
+  const { user, signOut } = useContext(UserContext)
   return (
     <div className="bg-gray-900 h-10 px-5 py-2">
       <div className="justify-center items-center flex space-x-4 text-gray-400">
@@ -19,12 +18,8 @@ function TopMenu() {
         <HelpOutline />
         <div className="flex flex-grow" />
         {user && <>
-          <span>{user.displayName}</span>
-          <Avatar
-            alt={user?.displayName}
-            src={user?.photoURL}
-            style={{ width: "25px", height: "25px" }}
-          />
+          <span>{user.email}</span>
+          <div className="cursor-pointer" onClick={signOut}><ExitToApp /></div>
         </>
         }
       </div>
